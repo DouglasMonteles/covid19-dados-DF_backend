@@ -1,7 +1,8 @@
 const axios = require('axios');
 
 const utils = require('./utils');
-const table = require('./TableOfDeath');
+const tabelaDeMortes = require('./TableOfDeath');
+const tabelaCasos = require('./TableOfCasesInRegions');
 
 module.exports = {
     async store(req, res) {
@@ -44,7 +45,9 @@ module.exports = {
 
         const totalObitos = parseInt(Pages[1].Texts[23].R[0].T);
 
-        const tabela = table.tabelaObitosDF(Pages[1].Texts);
+        const tabelaMortes = tabelaDeMortes.tabelaObitosDF(Pages[1].Texts);
+
+        const tabelaCasosPorRegiao = tabelaCasos.tabelaCasosPorRegiao(Pages[4].Texts);
 
         const dados = {
             data,
@@ -57,14 +60,16 @@ module.exports = {
             maiorIncidencia,
             hospitalizados,
             totalObitos,
-            tabela,
+            tabelaMortes,
+            tabelaCasosPorRegiao,
         };
 
-        console.log(dados);
+        /*const pagina = 4;
+        for (let i = 0; i < Pages[pagina].Texts.length; i++) {
+            console.log([i] + " ---> " +Pages[pagina].Texts[i].R[0].T);
+        }*/
 
-        for (let i = 0; i < Pages[1].Texts.length; i++) {
-            //console.log([i] + " ---> " +Pages[1].Texts[i].R[0].T);
-        }
+        console.log(dados);
 
         return res.json(dados);
     }

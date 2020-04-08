@@ -1,7 +1,40 @@
+let codigo = [
+    '%20',
+    '%C3%81', 
+    '%2F',      
+    '%C3%A3',
+    '%C3%A2',
+    '%C3%BA',
+    'C3%A3',
+    '%C3%A1',
+];
+
+let caractere = [
+    ' ',
+    'Á',
+    '/',
+    'ã',
+    'â',
+    'ú',
+    'ã',
+    'á',
+];
+
 module.exports = {
 
     repleceString(oldS, newS, string) {
         return string.split(oldS).join(newS);
+    },
+
+    repleceCaractereString(string) {
+
+        for (let i = 0; i < codigo.length; i++) {
+            if (string.indexOf(codigo[i]) > -1) {
+                string = this.repleceString(codigo[i], caractere[i], string);
+            } 
+        }
+
+        return string;
     },
 
     percentHomensInfectados(string) {
